@@ -4,3 +4,16 @@
     box-sizing: border-box;
 }
 
+
+.carousel-item img {
+    height: 300px;  
+}
+
+.img-rs {
+    width: 3rem;
+    background-color: black;
+    padding: 7px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
