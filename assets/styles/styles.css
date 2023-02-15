@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+@media only screen and (min-width:425px) {
+.container-checkbox-nav {
+ flex-wrap: wrap;
+}
+/*!Estilos Generales*/
+
 header{
   min-height: 10vh;
   background-color:#4d4250;
@@ -12,14 +18,18 @@ main{
     min-height: 80vh;
     background-color:#b66e6f;
 }
+
 footer{
     min-height: 10vh;
     background-color:#cf8884;
 }
 
+/*! Estilos de Navbar*/
+
 .nav-link {
   background-color: #b66e6f;
-  margin:8px;
+  padding: 6px 4px;
+  margin: 5px 5px;
   cursor: pointer;
   border-color: white;
 }
@@ -33,21 +43,55 @@ footer{
     background-color: white;
 }
 
+/*! Estilos del Carrusel*/
+
 .carousel-item img {
     height: 300px;  
 }
+
 .carousel img {
     height: 400px;
     object-fit: cover;
 }
 
+/*!Estilos de Card*/
+
 .card{
     max-width: 18rem;
 }
+
 .card img{
     height: 150px;
     object-fit: cover;
 }
+
+/*! Estilos de Card de detalle*/
+
+.card-details{
+    max-width: 540px;
+}
+
+
+
+/*! Estilos de Formulario de Contacto*/
+
+form{
+    padding: 10px;
+}
+
+/*! Estilos de Tabla -Stats*/
+
+.container-table{
+    max-width:max-content;
+    background-color: #e6a972; 
+}
+
+td{
+    height: 2rem;
+    text-align: center;
+}
+
+/*! Estilos de Redes Sociales de Footer*/
 
 .img-rs {
     width: 3rem;
@@ -55,20 +99,4 @@ footer{
     padding: 7px;
     border-radius: 50%;
     margin: 10px;
-}
-
-.card-details{
-    max-width: 80vh;
-    min-height: 300px;
-}
-
-.container-table{
-    max-width:max-content;
-    background-color: #e6a972; 
-    flex-wrap: nowrap !important;
-}
-
-td{
-    height: 2rem;
-    text-align: center;
 }
