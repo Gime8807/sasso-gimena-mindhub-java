@@ -6,8 +6,9 @@
 
 @media only screen and (min-width:425px) {
 .container-checkbox-nav {
- flex-wrap: wrap;
+ flex-wrap: wrap;}
 }
+
 /*!Estilos Generales*/
 
 header{
@@ -41,6 +42,10 @@ footer{
 
 .active{
     background-color: white;
+}
+
+.img-logo{
+    width:150px;
 }
 
 /*! Estilos del Carrusel*/
