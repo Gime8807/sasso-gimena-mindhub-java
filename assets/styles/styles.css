@@ -4,9 +4,49 @@
     box-sizing: border-box;
 }
 
+header{
+  min-height: 10vh;
+  background-color:#4d4250;
+}
+main{
+    min-height: 80vh;
+    background-color:#b66e6f;
+}
+footer{
+    min-height: 10vh;
+    background-color:#cf8884;
+}
+
+.nav-link {
+  background-color: #b66e6f;
+  margin:8px;
+  cursor: pointer;
+  border-color: white;
+}
+
+.nav-link:hover{
+    background-color: white;
+    transform: scale3d(1.2,1.2,1.2);
+}
+
+.active{
+    background-color: white;
+}
 
 .carousel-item img {
     height: 300px;  
+}
+.carousel img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.card{
+    max-width: 18rem;
+}
+.card img{
+    height: 150px;
+    object-fit: cover;
 }
 
 .img-rs {
@@ -17,3 +57,18 @@
     margin: 10px;
 }
 
+.card-details{
+    max-width: 80vh;
+    min-height: 300px;
+}
+
+.container-table{
+    max-width:max-content;
+    background-color: #e6a972; 
+    flex-wrap: nowrap !important;
+}
+
+td{
+    height: 2rem;
+    text-align: center;
+}
