@@ -9,6 +9,7 @@
  flex-wrap: wrap;}
 }
 
+
 /*!Estilos Generales*/
 
 header{
@@ -26,7 +27,11 @@ footer{
 }
 
 /*! Estilos de Navbar*/
-
+.navbar-toggleable-sm .nav-item {
+    display: flex;
+    max-width: 170px;
+    justify-content: center;
+}
 .nav-link {
   background-color: #b66e6f;
   padding: 6px 4px;
@@ -88,7 +93,7 @@ form{
 
 .container-table{
     max-width:max-content;
-    background-color: #e6a972; 
+    background-color: #e6a972;
 }
 
 td{
