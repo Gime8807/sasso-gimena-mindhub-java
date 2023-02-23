@@ -4,8 +4,9 @@
     box-sizing: border-box;
 }
 
-@media only screen and (min-width:425px) {
-.container-checkbox-nav {
+@media only screen and (max-width:425px) {
+.container-checkbox-nav,
+.checkbox  {
  flex-wrap: wrap;}
 }
 
