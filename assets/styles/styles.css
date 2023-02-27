@@ -28,6 +28,7 @@ footer{
 }
 
 /*! Estilos de Navbar*/
+
 .navbar-toggleable-sm .nav-item {
     display: flex;
     max-width: 170px;
@@ -74,6 +75,10 @@ footer{
 .card img{
     height: 150px;
     object-fit: cover;
+}
+
+.c{
+    padding:100px;
 }
 
 /*! Estilos de Card de detalle*/
