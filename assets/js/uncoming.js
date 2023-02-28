@@ -14,6 +14,8 @@ for (let elements of data.events){
     if (uncomingDate>newDate){
         let div = document.createElement('div')
         div.classList.add ("card","m-3")
+        div.classList.add ("border-3","border-dark","rounded")
+    div.classList.add( "shadow","p-3","mb-5","bg-body-tertiary","rounded")
         div.style.width ="18rem"
         div.innerHTML = `<img src="${elements.image}" class="card-img-top" alt="...">
         <div class="card-body">

@@ -66,20 +66,25 @@ footer{
 }
 
 /*!Estilos de Card*/
+.card:hover{
+    transform: scale3d(1.1,1.1,1.1);
+}
 
+.card:hover a {
+    background-color: #b66e6f;
+    border: none;  
+}
 .card img{
     height: 150px;
     object-fit: cover;
 }
 
-.c{
-    padding:100px;
-}
+
 
 /*! Estilos de Card de detalle*/
 
-.card-details{
-    max-width: 540px;
+.details {
+    width: 18rem;
 }
 
 
