@@ -1,4 +1,4 @@
-console.log(data);
+/*console.log(data);
 let cards_index= document.getElementById('cardsEvents');
 console.log(cards_index)
 
@@ -20,4 +20,33 @@ for (let elements of data.events){
      console.log(elements);
      fragment.appendChild(div)
 }
-cards_index.appendChild(fragment)
+cards_index.appendChild(fragment)*/
+
+let arrayCategories = []
+
+for (let elements of data.events){
+    let categorys = elements.category
+    console.log(categorys)
+   arrayCategories.push(categorys)
+}
+console.log(arrayCategories)
+
+
+let newCategorys = [...new Set (arrayCategories)]
+console.log(newCategorys)
+
+let navCheckbox = document.getElementById ('checkbox');
+
+let fragment= document.createDocumentFragment()
+
+for (let element of newCategorys){
+    let div = document.createElement('div')
+    div.classList.add ("form-check")
+    div.innerHTML = `<input class="form-check-input" type="checkbox" value=" " id="flexCheckIndeterminate">
+    <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
+     console.log(element);
+     fragment.appendChild(div)
+}
+
+navCheckbox.appendChild(fragment)
+

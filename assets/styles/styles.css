@@ -116,3 +116,6 @@ td{
     border-radius: 50%;
     margin: 10px;
 }
+.img-rs:hover{
+    transform: scale3d(1.1,1.1,1.1);
+}
