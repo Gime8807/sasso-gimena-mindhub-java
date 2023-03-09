@@ -1,17 +1,20 @@
 console.log(data);
 console.log([document])
 
+const cardContainer = document.getElementById ('cardsEvents');
 
-//*Captura de contenedor de las cards
-const cards_index= document.getElementById('cardsEvents');
-console.log(cards_index)
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 
-function renderCard (array, container){
-    container.innerHTML=''
+function renderCard (array,container){
+    container.innerHTML= ''
     let fragment= document.createDocumentFragment()
-    
+    if (array.length == 0){
+            let alert = document.createElement('div')
+            console.log(alert)
+            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            container.appendChild(alert)
+    }else{
     for (let elements of array){
         let div = document.createElement('div')
         div.classList.add ("card","m-3")
@@ -28,11 +31,12 @@ function renderCard (array, container){
          console.log(elements);
          fragment.appendChild(div)    
     }
-    cards_index.appendChild(fragment)
-
+    container.appendChild(fragment)
 }
+}
+
 //*llamado de la funcion de cards
-renderCard(data.events,cards_index);
+renderCard(data.events,cardContainer);
 
 
 
@@ -44,8 +48,10 @@ const navCheckbox = document.getElementById ('checkbox');
 
 function checkbox (array){
 
-    let arrayCategories = array.map(function (array){return array.category});
-    let newCategorys = [...new Set (arrayCategories)]
+    // let arrayCategories = array.map(function (array){return array.category});
+    //let newCategorys = [...new Set (arrayCategories)]
+
+    let newCategorys = [...new Set(array.map(function (array){return array.category}))]
      console.log(newCategorys)
     
     let fragment= document.createDocumentFragment()
@@ -60,43 +66,42 @@ function checkbox (array){
 }
 navCheckbox.appendChild (fragment)
 }
-
-//*llamado de la funcion de busqueda checkbox 
 checkbox(data.events)
 
-let allCheckbox = document.querySelectorAll ('input[type=checkbox]');
-console.log(allCheckbox)
+let inputChecked =[]
+let inputText= ''
+function newSelectionArrays(arrayCategorys, arrayObjets){
+    if (arrayCategorys.length === 0) 
+      return arrayObjets
+   let newArrayFilter= arrayObjets.filter(evento =>arrayCategorys.includes(evento.category))
+   return newArrayFilter
+  }
 
-allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', newSelection)})
+  function searchCards(value, arrayObjets) {
+    if (value =='') return arrayObjets
+    return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
+   )}
 
-function newSelection(){
-
-  let inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked)
-  console.log(inputChecked);
-  
-  let inputsValue = inputChecked.map(input => input.value)
-  console.log(inputsValue);
-
- let eventosFiltrados = data.events.filter(evento =>inputsValue.includes(evento.category))
-    console.log(eventosFiltrados);
-    renderCard(eventosFiltrados,cards_index)
-}
-
-
-
-// //*Captura de contenedor de search
+const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
+allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
+     console.log(inputChecked)
+    filterAll (data.events);  
+})})
 
 const inputSearch = document.getElementById ('search')
- 
-//! Search - este busca las cards por nombre
- inputSearch.addEventListener('keyup', searchCards)
+ inputSearch.addEventListener('keyup', (e)=>{
+    inputText = inputSearch.value
+    console.log(inputText)
+   filterAll(data.events)
+ })
 
- function searchCards(e) {
-    console.log(e.target.value)
-    let nameCards = data.events.filter(evento => {
-      return evento.name.toLowerCase().search(e.target.value.toLowerCase().trim()) !== -1 
-  })
- console.log(nameCards) 
- renderCard (nameCards,cards_index)   
+
+ function filterAll (array){
+    let cardsChecked= newSelectionArrays(inputChecked,array)
+    let checkFinalSelect= searchCards(inputText,cardsChecked)
+    console.log(checkFinalSelect)
+    renderCard(checkFinalSelect,cardContainer)
 }
+
 

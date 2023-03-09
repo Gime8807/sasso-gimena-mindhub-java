@@ -12,11 +12,14 @@ console.log(params)
  let boxCard = document.createElement ('div');
      boxCard.className='card details border-3 border-dark rounded shadow p-3 mb-5 bg-body-tertiary rounded'
      boxCard.innerHTML=` <img src="${cardDetails.image}" class="card-img-top" alt="...">
-     <div class="card-body">
+     <div class="d-flex flex-column justify-content-center card-body">
        <h5 class="card-title">${cardDetails.name}</h5>
+       <p class="card-text">Date: ${cardDetails.date}</p>
        <p class="card-text">${cardDetails.description}</p>
+       <p class="card-text">Place:${cardDetails.place}</p>
+       <p class="card-text">Capacity:${cardDetails.capacity}</p>
        <p class="d-flex text-center align-items-center">Price:${cardDetails.price}</p>
-       <a href="./index.html" class="btn btn-warning">Volver</a>
+       <button onclick="history.back()" class="btn btn-warning">Volver</button>
      </div>`
      containerCardDetails.appendChild(boxCard)
 }

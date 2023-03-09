@@ -1,12 +1,6 @@
 
 console.log(data);
 
-
-//Creamos una variable para llamar al div donde se van alojar las cards, por id de elemento.
-//Usamos esta propiedad de fragment para que no se recargue el sitio xq cada vuelta de funcion.
-//Creamos una variable para usar de referencia la fecha actual y separar las cards, pasamos el dato de strig a numero con la fucnion parse.
-//Creamos la funcion for para crear las cards de manera dinamica, llamando al array de los elementos del archivo data, con data. events, a su vez debemos pasar a numero la fecha de cada evento, creamos la variable uncomingDate, y usando un if le pedimos que nos traiga los eventos posteriores a la fecha actual, para luego crear cada cards en contenedor.
-
 //*Captura de contenedor de las cards
 let cards_uncoming= document.getElementById('cardsUncoming');
 console.log(cards_uncoming)
@@ -15,45 +9,51 @@ console.log(cards_uncoming)
 let newDate = Date.parse(data.currentDate);
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
-
 function renderCardUncoming (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
-
-    for (let elements of array){
-        let uncomingDate = Date.parse(elements.date);
-        if (uncomingDate>newDate){
-            let div = document.createElement('div')
-            div.classList.add ("card","m-3")
-            div.classList.add ("border-3","border-dark","rounded")
-        div.classList.add( "shadow","p-3","mb-5","bg-body-tertiary","rounded")
-            div.style.width ="18rem"
-            div.innerHTML = `<img src="${elements.image}" class="card-img-top" alt="...">
-            <div class="card-body">
-             <h5 class="card-title">${elements.name}</h5>
-             <p class="card-text">${elements.description}</p>
-             <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
-             <a href="./card.html" class="btn btn-warning">Details</a>
-             </div>`
-             console.log(elements);
-             fragment.appendChild(div)
+        if (array.length == 0){
+            let alert = document.createElement('div')
+            console.log(alert)
+            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            container.appendChild(alert)
+        }else{
+        for (let elements of array){
+            let uncomingDate = Date.parse(elements.date);
+            if (uncomingDate>newDate){
+                let div = document.createElement('div')
+                    div.classList.add ("card","m-3")
+                    div.classList.add ("border-3","border-dark","rounded")
+                    div.classList.add( "shadow","p-3","mb-5","bg-body-tertiary","rounded")
+                    div.style.width ="18rem"
+                    div.innerHTML = `<img src="${elements.image}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">${elements.name}</h5>
+                        <p class="card-text">${elements.description}</p>
+                        <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
+                        <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
+                        </div>`
+                console.log(elements);
+                fragment.appendChild(div)
         }    
-    }
-    cards_uncoming.appendChild(fragment)
+    }}
+    container.appendChild(fragment)
 }
 
 renderCardUncoming(data.events,cards_uncoming)
 
 //* Captura de contenedor de checkbox
 
-const navCheckbox = document.getElementById ('checkbox');
+const navCheckbox = document.getElementById ('checkbox-uncoming');
 
 //! funcion de checkbox por categorias - este trae las categorias de las cards
 
 function checkbox (array){
 
-    let arrayCategories = array.map(function (array){return array.category});
-    let newCategorys = [...new Set (arrayCategories)]
+    // let arrayCategories = array.map(function (array){return array.category});
+    //let newCategorys = [...new Set (arrayCategories)]
+
+    let newCategorys = [...new Set(array.map(function (array){return array.category}))]
      console.log(newCategorys)
     
     let fragment= document.createDocumentFragment()
@@ -68,6 +68,45 @@ function checkbox (array){
 }
 navCheckbox.appendChild (fragment)
 }
-
-//*llamado de la funcion de busqueda checkbox 
 checkbox(data.events)
+
+let inputChecked =[]
+let inputText= ''
+function newSelectionArrays(arrayCategorys, arrayObjets){
+    if (arrayCategorys.length === 0) 
+      return arrayObjets
+   let newArrayFilter= arrayObjets.filter(evento =>arrayCategorys.includes(evento.category))
+   return newArrayFilter
+  }
+
+  function searchCards(value, arrayObjets) {
+    if (value =='') return arrayObjets
+    return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
+   )}
+
+const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
+allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
+     console.log(inputChecked)
+    filterAll (data.events);  
+})})
+
+const inputSearch = document.getElementById ('search-uncoming')
+ inputSearch.addEventListener('keyup', (e)=>{
+    inputText = inputSearch.value
+    console.log(inputText)
+   filterAll(data.events)
+ })
+
+
+ function filterAll (array){
+    let cardsChecked= newSelectionArrays(inputChecked,array)
+    let checkFinalSelect= searchCards(inputText,cardsChecked)
+    console.log(checkFinalSelect)
+    renderCardUncoming(checkFinalSelect,cards_uncoming)
+}
+
+
+
+
+
