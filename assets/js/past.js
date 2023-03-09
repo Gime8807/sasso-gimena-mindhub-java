@@ -43,7 +43,6 @@ function renderCardPast (array, container){
 renderCardPast(data.events,cards_past)
 
 //* Captura de contenedor de checkbox
-
 const navCheckbox = document.getElementById ('checkbox-past');
 
 //! funcion de checkbox por categorias - este trae las categorias de las cards
@@ -72,33 +71,38 @@ checkbox(data.events)
 
 let inputChecked =[]
 let inputText= ''
+
+//! funcion de filtros por Categorias
 function newSelectionArrays(arrayCategorys, arrayObjets){
     if (arrayCategorys.length === 0) 
       return arrayObjets
-   let newArrayFilter= arrayObjets.filter(evento =>arrayCategorys.includes(evento.category))
-   return newArrayFilter
+      let newArrayFilter= arrayObjets.filter(evento =>arrayCategorys.includes(evento.category))
+      return newArrayFilter
   }
 
-  function searchCards(value, arrayObjets) {
+//!Funcion de filtro por busqueda
+function searchCards(value, arrayObjets) {
     if (value =='') return arrayObjets
     return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
    )}
 
+//!Checks
 const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
-allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+    allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
      inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
      console.log(inputChecked)
     filterAll (data.events);  
 })})
 
+//!Search
 const inputSearch = document.getElementById ('search-past')
- inputSearch.addEventListener('keyup', (e)=>{
+    inputSearch.addEventListener('keyup', (e)=>{
     inputText = inputSearch.value
     console.log(inputText)
    filterAll(data.events)
  })
 
-
+//! Funcion para filtros cruzados
  function filterAll (array){
     let cardsChecked= newSelectionArrays(inputChecked,array)
     let checkFinalSelect= searchCards(inputText,cardsChecked)

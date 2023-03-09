@@ -2,13 +2,15 @@
 console.log(data);
 
 //*Captura de contenedor de las cards
+
 let cards_uncoming= document.getElementById('cardsUncoming');
 console.log(cards_uncoming)
 
-//*Variable para covertir en elemento tipo date y poder traer cards por fecha.
+//*Variable para convertir en elemento tipo date y poder traer cards por fecha.
 let newDate = Date.parse(data.currentDate);
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
+
 function renderCardUncoming (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
@@ -46,10 +48,12 @@ renderCardUncoming(data.events,cards_uncoming)
 
 const navCheckbox = document.getElementById ('checkbox-uncoming');
 
-//! funcion de checkbox por categorias - este trae las categorias de las cards
+//! funcion de filtros por Categorias
+
+let inputChecked =[]
+let inputText= ''
 
 function checkbox (array){
-
     // let arrayCategories = array.map(function (array){return array.category});
     //let newCategorys = [...new Set (arrayCategories)]
 
@@ -58,20 +62,21 @@ function checkbox (array){
     
     let fragment= document.createDocumentFragment()
     
-    for (let element of newCategorys){
-    let div = document.createElement('div')
-    div.classList.add ("form-check")
-    div.innerHTML = `<input class="form-check-input" type="checkbox" value="${element}" id="${element}">
-    <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
-     console.log(element);
-   fragment.appendChild(div)
+        for (let element of newCategorys){
+            let div = document.createElement('div')
+            div.classList.add ("form-check")
+            div.innerHTML = `<input class="form-check-input" type="checkbox" value="${element}" id="${element}">
+            <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
+            console.log(element);
+        fragment.appendChild(div)
 }
-navCheckbox.appendChild (fragment)
+    navCheckbox.appendChild (fragment)
 }
 checkbox(data.events)
 
-let inputChecked =[]
-let inputText= ''
+
+
+
 function newSelectionArrays(arrayCategorys, arrayObjets){
     if (arrayCategorys.length === 0) 
       return arrayObjets
