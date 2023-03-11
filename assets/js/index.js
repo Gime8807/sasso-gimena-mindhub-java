@@ -1,7 +1,41 @@
-console.log(data);
-console.log([document])
+// console.log(data);
+// console.log([document])
 
 const cardContainer = document.getElementById ('cardsEvents');
+const navCheckbox = document.getElementById ('checkbox');
+
+
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
+
+async function newData(){
+  try{
+    let response = await fetch(urlApi)
+    let dataDos = await response.json()
+
+    renderCard(dataDos.events,cardContainer);
+    checkbox(dataDos.events)
+
+    //!Checks
+      const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
+      allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+      inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
+      console.log(inputChecked)
+        filterAll (dataDos.events);  
+      })})
+
+    //!Search
+    const inputSearch = document.getElementById ('search')
+    inputSearch.addEventListener('keyup', (e)=>{
+    inputText = inputSearch.value
+    console.log(inputText)
+    filterAll(dataDos.events)
+    })
+  }catch(error){
+      console.log('Estoy en el catch:' + error.message)
+  } 
+}
+newData()
+
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 
@@ -34,12 +68,6 @@ function renderCard (array,container){
 }
 }
 
-//*llamado de la funcion de cards
-renderCard(data.events,cardContainer);
-
-
-//* Captura de contenedor de checkbox
-const navCheckbox = document.getElementById ('checkbox');
 
 //! funcion de checkbox por categorias - este trae las categorias de las cards
 
@@ -63,7 +91,6 @@ function checkbox (array){
       navCheckbox.appendChild (fragment)
 }
 
-checkbox(data.events)
 
 let inputChecked =[]
 let inputText= ''
@@ -82,21 +109,6 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
     return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
    )}
 
-//!Checks
-const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
-    allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
-     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-     console.log(inputChecked)
-      filterAll (data.events);  
-})})
-
-//!Search
-const inputSearch = document.getElementById ('search')
-    inputSearch.addEventListener('keyup', (e)=>{
-    inputText = inputSearch.value
-    console.log(inputText)
-    filterAll(data.events)
- })
 
 //! Funcion para filtros cruzados
  function filterAll (array){
