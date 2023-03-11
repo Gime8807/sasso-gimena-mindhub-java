@@ -26,4 +26,4 @@ console.log(params)
      containerCardDetails.appendChild(boxCard)
 }
 
-ShowDetailsCards ()
+ShowDetailsCards()

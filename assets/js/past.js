@@ -6,6 +6,7 @@ let cards_past= document.getElementById('cardsPast');
 console.log(cards_past)
 
 //*Variable para covertir en elemento tipo date y poder traer cards por fecha.
+
 let newDate = Date.parse(data.currentDate);
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
@@ -20,7 +21,7 @@ function renderCardPast (array, container){
         }else{
         for (let elements of array){
             let uncomingDate = Date.parse(elements.date);
-            if (uncomingDate>newDate){
+            if (uncomingDate<newDate){
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -33,14 +34,13 @@ function renderCardPast (array, container){
                         <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
                         <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
                         </div>`
-                console.log(elements);
+                //console.log(elements);
                 fragment.appendChild(div)
         }    
     }}
     container.appendChild(fragment)
 }
-
-renderCardPast(data.events,cards_past)
+  renderCardPast(data.events,cards_past)
 
 //* Captura de contenedor de checkbox
 const navCheckbox = document.getElementById ('checkbox-past');
