@@ -6,29 +6,43 @@
 let cards_uncoming= document.getElementById('cardsUncoming');
 //console.log(cards_uncoming)
 
-//*Variable para convertir en elemento tipo date y poder traer cards por fecha.
-
-
 
 let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
 
 async function newDataUncoming(){
     try{
-      let response = await fetch(urlApi)
-      let dataDos = await response.json()
-        console.log(dataDos.events)
+        let response = await fetch(urlApi)
+        let dataDos = await response.json()
+            console.log(dataDos.events)
 
-      const newDate = Date.parse(dataDos.currentDate);
-        //console.log(newDate)
-      const uncomingDate = Date.parse(dataDos.events[0].date);
-        //console.log(uncomingDate)
+         const newDate = Date.parse(dataDos.currentDate);
+             console.log(newDate)
+        const uncomingDate = Date.parse(dataDos.events[0].date);
+            console.log(uncomingDate)
 
-        //  if(uncomingDate>newDate){
-        //     let fechas= dataDos.events.filter(evento=>evento.date);
-        //     return fechas
-        //     console.log(fechas)
-        // }
-        // renderCardUncoming(fechas,cards_uncoming)
+        let fechasCard= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate);
+             
+            console.log(fechasCard)
+        
+        renderCardUncoming(fechasCard,cards_uncoming)
+        checkbox(dataDos.events)
+
+        //!Checks
+        const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
+        allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+        inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
+        console.log(inputChecked)
+        filterAll (dataDos.events);  
+        })})
+
+        //!Search
+        const inputSearch = document.getElementById ('search-uncoming')
+        inputSearch.addEventListener('keyup', (e)=>{
+            inputText = inputSearch.value
+            console.log(inputText)
+        filterAll(dataDos.events)
+        })
+        
 
     }catch(error){
         console.log('Estoy en el catch:' + error.message)
@@ -41,13 +55,15 @@ async function newDataUncoming(){
 function renderCardUncoming (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
-        if (array.length == 0){
-            let alert = document.createElement('div')
-            console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
-            container.appendChild(alert)
-        }else{
+        
         for (let elements of array){
+
+            if (array.length == 0){
+                let alert = document.createElement('div')
+                console.log(alert)
+                alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+                container.appendChild(alert)
+            }else{
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -66,7 +82,6 @@ function renderCardUncoming (array, container){
     }
     container.appendChild(fragment)
 }
-
 
 
 //* Captura de contenedor de checkbox
@@ -97,9 +112,6 @@ function checkbox (array){
 }
     navCheckbox.appendChild (fragment)
 }
-checkbox(data.events)
-
-
 
 
 function newSelectionArrays(arrayCategorys, arrayObjets){
@@ -114,19 +126,6 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
     return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
    )}
 
-const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
-allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
-     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-     console.log(inputChecked)
-    filterAll (data.events);  
-})})
-
-const inputSearch = document.getElementById ('search-uncoming')
- inputSearch.addEventListener('keyup', (e)=>{
-    inputText = inputSearch.value
-    console.log(inputText)
-   filterAll(data.events)
- })
 
 
  function filterAll (array){

@@ -1,27 +1,66 @@
 
-console.log(data);
+//console.log(data);
 
 //*Captura de contenedor de las cards
 let cards_past= document.getElementById('cardsPast');
 console.log(cards_past)
 
-//*Variable para covertir en elemento tipo date y poder traer cards por fecha.
-let newDate = Date.parse(data.currentDate);
+
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
+
+async function newDataPast(){
+    try{
+        let response = await fetch(urlApi)
+        let dataDos = await response.json()
+            console.log(dataDos.events)
+
+        const newDate = Date.parse(dataDos.currentDate);
+            console.log(newDate)
+        const uncomingDate = Date.parse(dataDos.events[0].date);
+            console.log(uncomingDate)
+
+        let dateCardPast= dataDos.events.filter(evento=>Date.parse(evento.date)<newDate);
+            
+            console.log(dateCardPast) 
+
+        renderCardPast(dateCardPast,cards_past)
+        checkbox(dataDos.events)
+
+        //!Checks
+        const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
+        allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
+        inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
+        console.log(inputChecked)
+        filterAll (dataDos.events);  
+        })})
+
+        //!Search
+        const inputSearch = document.getElementById ('search-past')
+        inputSearch.addEventListener('keyup', (e)=>{
+        inputText = inputSearch.value
+        console.log(inputText)
+        filterAll(dataDos.events)
+        })
+
+
+    }catch(error){
+        console.log('Estoy en el catch:' + error.message)
+    } 
+  }
+  newDataPast()  
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 function renderCardPast (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
-        if (array.length == 0){
-            let alert = document.createElement('div')
-            console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
-            container.appendChild(alert)
-        }else{
+        
         for (let elements of array){
-            let uncomingDate = Date.parse(elements.date);
-            console.log(uncomingDate)
-            if (uncomingDate<newDate){
+            if (array.length == 0){
+                let alert = document.createElement('div')
+                console.log(alert)
+                alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+                container.appendChild(alert)
+            }else{
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -34,14 +73,12 @@ function renderCardPast (array, container){
                         <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
                         <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
                         </div>`
-                console.log(elements);
+                //console.log(elements);
                 fragment.appendChild(div)
         }    
-    }}
+    }
     container.appendChild(fragment)
 }
-
-renderCardPast(data.events,cards_past)
 
 //* Captura de contenedor de checkbox
 const navCheckbox = document.getElementById ('checkbox-past');
@@ -68,7 +105,7 @@ function checkbox (array){
 }
 navCheckbox.appendChild (fragment)
 }
-checkbox(data.events)
+
 
 let inputChecked =[]
 let inputText= ''
@@ -87,21 +124,6 @@ function searchCards(value, arrayObjets) {
     return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
    )}
 
-//!Checks
-const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
-    allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
-     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-     console.log(inputChecked)
-    filterAll (data.events);  
-})})
-
-//!Search
-const inputSearch = document.getElementById ('search-past')
-    inputSearch.addEventListener('keyup', (e)=>{
-    inputText = inputSearch.value
-    console.log(inputText)
-   filterAll(data.events)
- })
 
 //! Funcion para filtros cruzados
  function filterAll (array){

@@ -12,14 +12,12 @@ async function newData(){
     let response = await fetch(urlApi)
     let dataDos = await response.json()
 
-    let Capacity = (dataDos.events.map(evento=>evento.capacity))
-    console.log(Capacity)
+    // let Capacity = (dataDos.events.map(evento=>evento.capacity))
+    // console.log(Capacity)
 
     renderCard(dataDos.events,cardContainer);
     checkbox(dataDos.events)
 
-    console.log(mayorCapacity(dataDos.events))
-    console.log(porcentajeAtendance(dataDos.events))
 
     //!Checks
       const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
@@ -67,7 +65,7 @@ function renderCard (array,container){
           <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
           <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
           </div>`
-          console.log(elements);
+          //console.log(elements);
           fragment.appendChild(div)    
          }
     container.appendChild(fragment)
@@ -77,13 +75,14 @@ function renderCard (array,container){
 
 //! funcion de checkbox por categorias - este trae las categorias de las cards
 
+let newCategorys = [...new Set(data.events.map(function (events){return events.category}))]
+     console.log(newCategorys)
+
 function checkbox (array){
 
     // let arrayCategories = array.map(function (array){return array.category});
     //let newCategorys = [...new Set (arrayCategories)]
-    let newCategorys = [...new Set(array.map(function (array){return array.category}))]
-     console.log(newCategorys)
-
+    
     let fragment= document.createDocumentFragment()
     
       for (let element of newCategorys){
@@ -125,23 +124,34 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
 }
 
 
+// let Capacity = (data.events.map(evento=>evento.capacity))
+// let Asistance = (data.events.map(evento=>evento.assistance? evento.assistance:evento.estimate))
+// console.log(Capacity)
+// console.log(Asistance)
 
-function mayorCapacity(array){
-let mayor =array[0];
-  for (let i=0; i<array.legth; i++){
-    if(mayor<array[i]){
-      mayor= array[i];
-    }
-  }
-}
 
-function porcentajeAtendance(array){
-  for (element of array){
-    if(array.assistance==true){
-      let attendance =(element.assistance/element.capacity)*100
-      console.log(attendance)
-    }  
-  }
-}
+// function mayorCapacity(array){
+// let mayor =array[0];
+//   for (let i=0; i<array.legth; i++){
+//     if(mayor<array[i]){
+//       mayor= array[i];
+//     }
+//   }
+// }
+//console.log(mayorCapacity(data.events))
+
+
+// function porcentajeAtendance(array,categoria){
+//   let eventPorCategory = array.filter(evento=> evento.category == categoria)
+//   console.log(eventPorCategory)
+//   for (element of array){
+//      let attendance=eventPorCategory.reduce((total,element)=>(element.assistance? total+=element.assistance/element.capacity:total+=element.estimate/element.capacity))
+//      console.log(attendance)
+
+//      let porcentaje= Math.floor(attendance*100)
+    
+//   }
+// }
+// console.log(porcentajeAtendance(data.events,'Museum'))
 
 
