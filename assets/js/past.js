@@ -20,7 +20,8 @@ function renderCardPast (array, container){
         }else{
         for (let elements of array){
             let uncomingDate = Date.parse(elements.date);
-            if (uncomingDate>newDate){
+            console.log(uncomingDate)
+            if (uncomingDate<newDate){
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")

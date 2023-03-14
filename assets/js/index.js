@@ -12,8 +12,14 @@ async function newData(){
     let response = await fetch(urlApi)
     let dataDos = await response.json()
 
+    let Capacity = (dataDos.events.map(evento=>evento.capacity))
+    console.log(Capacity)
+
     renderCard(dataDos.events,cardContainer);
     checkbox(dataDos.events)
+
+    console.log(mayorCapacity(dataDos.events))
+    console.log(porcentajeAtendance(dataDos.events))
 
     //!Checks
       const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
@@ -116,6 +122,26 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
     let checkFinalSelect= searchCards(inputText,cardsChecked)
     console.log(checkFinalSelect)
     renderCard(checkFinalSelect,cardContainer)
+}
+
+
+
+function mayorCapacity(array){
+let mayor =array[0];
+  for (let i=0; i<array.legth; i++){
+    if(mayor<array[i]){
+      mayor= array[i];
+    }
+  }
+}
+
+function porcentajeAtendance(array){
+  for (element of array){
+    if(array.assistance==true){
+      let attendance =(element.assistance/element.capacity)*100
+      console.log(attendance)
+    }  
+  }
 }
 
 

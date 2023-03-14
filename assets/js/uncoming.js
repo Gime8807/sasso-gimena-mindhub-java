@@ -1,13 +1,40 @@
 
-console.log(data);
+//console.log(data);
 
 //*Captura de contenedor de las cards
 
 let cards_uncoming= document.getElementById('cardsUncoming');
-console.log(cards_uncoming)
+//console.log(cards_uncoming)
 
 //*Variable para convertir en elemento tipo date y poder traer cards por fecha.
-let newDate = Date.parse(data.currentDate);
+
+
+
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
+
+async function newDataUncoming(){
+    try{
+      let response = await fetch(urlApi)
+      let dataDos = await response.json()
+        console.log(dataDos.events)
+
+      const newDate = Date.parse(dataDos.currentDate);
+        //console.log(newDate)
+      const uncomingDate = Date.parse(dataDos.events[0].date);
+        //console.log(uncomingDate)
+
+        //  if(uncomingDate>newDate){
+        //     let fechas= dataDos.events.filter(evento=>evento.date);
+        //     return fechas
+        //     console.log(fechas)
+        // }
+        // renderCardUncoming(fechas,cards_uncoming)
+
+    }catch(error){
+        console.log('Estoy en el catch:' + error.message)
+    } 
+  }
+  newDataUncoming()  
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 
@@ -21,8 +48,6 @@ function renderCardUncoming (array, container){
             container.appendChild(alert)
         }else{
         for (let elements of array){
-            let uncomingDate = Date.parse(elements.date);
-            if (uncomingDate>newDate){
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -35,14 +60,14 @@ function renderCardUncoming (array, container){
                         <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
                         <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
                         </div>`
-                console.log(elements);
+                //console.log(elements);
                 fragment.appendChild(div)
         }    
-    }}
+    }
     container.appendChild(fragment)
 }
 
-renderCardUncoming(data.events,cards_uncoming)
+
 
 //* Captura de contenedor de checkbox
 
