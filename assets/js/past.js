@@ -8,6 +8,7 @@ console.log(cards_past)
 //*Variable para covertir en elemento tipo date y poder traer cards por fecha.
 
 let newDate = Date.parse(data.currentDate);
+let pastDate = data.events.filter(evento=>Date.parse(evento.date)<newDate);
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 function renderCardPast (array, container){
@@ -16,12 +17,10 @@ function renderCardPast (array, container){
         if (array.length == 0){
             let alert = document.createElement('div')
             console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            alert.innerHTML = `<h3>There are no results for this search, try again.</h3>`
             container.appendChild(alert)
         }else{
         for (let elements of array){
-            let uncomingDate = Date.parse(elements.date);
-            if (uncomingDate<newDate){
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -36,11 +35,11 @@ function renderCardPast (array, container){
                         </div>`
                 //console.log(elements);
                 fragment.appendChild(div)
-        }    
+           
     }}
     container.appendChild(fragment)
 }
-  renderCardPast(data.events,cards_past)
+  renderCardPast(pastDate,cards_past)
 
 //* Captura de contenedor de checkbox
 const navCheckbox = document.getElementById ('checkbox-past');
@@ -67,7 +66,7 @@ function checkbox (array){
 }
 navCheckbox.appendChild (fragment)
 }
-checkbox(data.events)
+checkbox(pastDate)
 
 let inputChecked =[]
 let inputText= ''
@@ -91,7 +90,7 @@ const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
     allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
      inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
      console.log(inputChecked)
-    filterAll (data.events);  
+    filterAll (pastDate);  
 })})
 
 //!Search
@@ -99,7 +98,7 @@ const inputSearch = document.getElementById ('search-past')
     inputSearch.addEventListener('keyup', (e)=>{
     inputText = inputSearch.value
     console.log(inputText)
-   filterAll(data.events)
+   filterAll(pastDate)
  })
 
 //! Funcion para filtros cruzados

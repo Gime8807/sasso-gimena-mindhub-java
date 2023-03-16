@@ -6,9 +6,13 @@ console.log(data);
 let cards_uncoming= document.getElementById('cardsUncoming');
 console.log(cards_uncoming)
 
+let newDate = Date.parse(data.currentDate);
+
+let uncomingDate = data.events.filter(evento=>Date.parse(evento.date)>newDate);
+console.log(uncomingDate)
+
 //*Variable para convertir en elemento tipo date y poder traer cards por fecha.
 
-let newDate = Date.parse(data.currentDate);
 
 //!Cards renderizadas - carga de manera dinamica las cards desde el archivo data.js
 
@@ -18,12 +22,10 @@ function renderCardUncoming (array, container){
         if (array.length == 0){
             let alert = document.createElement('div')
             console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            alert.innerHTML = `<h3>There are no results for this search, try again.</h3>`
             container.appendChild(alert)
         }else{
         for (let elements of array){
-            let uncomingDate = Date.parse(elements.date);
-            if (uncomingDate>newDate){
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -38,11 +40,11 @@ function renderCardUncoming (array, container){
                         </div>`
                 console.log(elements);
                 fragment.appendChild(div)
-        }    
+           
     }}
     container.appendChild(fragment)
 }
-  renderCardUncoming(data.events,cards_uncoming)
+  renderCardUncoming(uncomingDate,cards_uncoming)
 
 
 //* Captura de contenedor de checkbox
@@ -72,7 +74,7 @@ function checkbox (array){
     navCheckbox.appendChild (fragment)
 }
 
-checkbox(data.events)
+checkbox(uncomingDate)
 
 
 let inputChecked =[]
@@ -98,7 +100,7 @@ function searchCards(value, arrayObjets) {
     allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
     inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
     console.log(inputChecked)
-    filterAll (data.events);  
+    filterAll (uncomingDate);  
     })})
 
  //!Search
@@ -106,7 +108,7 @@ function searchCards(value, arrayObjets) {
     inputSearch.addEventListener('keyup', (e)=>{
     inputText = inputSearch.value
     console.log(inputText)
-    filterAll(data.events)
+    filterAll(uncomingDate)
     })
 
 //! Funcion para filtros cruzados
