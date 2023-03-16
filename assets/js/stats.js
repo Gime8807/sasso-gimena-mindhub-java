@@ -6,7 +6,7 @@ async function tableStats(){
     let dataDos = await response.json()
 
     const newDate = Date.parse(dataDos.currentDate);
-    console.log(newDate)
+  
 
     let dateCardUncoming= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate); 
     let dateCardPast = dataDos.events.filter(evento=>Date.parse(evento.date)<newDate);
