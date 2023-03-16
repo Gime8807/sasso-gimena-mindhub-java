@@ -17,9 +17,7 @@ async function newDataUncoming(){
 
          const newDate = Date.parse(dataDos.currentDate);
              console.log(newDate)
-        const uncomingDate = Date.parse(dataDos.events[0].date);
-            console.log(uncomingDate)
-
+    
         let fechasCard= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate);
              
             console.log(fechasCard)
@@ -28,11 +26,14 @@ async function newDataUncoming(){
         checkbox(dataDos.events)
 
         //!Checks
+        let inputChecked =[]
+        let inputText= ''
+
         const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
         allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
         inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
         console.log(inputChecked)
-        filterAll (dataDos.events);  
+        filterAll (fechasCard);  
         })})
 
         //!Search
@@ -40,9 +41,15 @@ async function newDataUncoming(){
         inputSearch.addEventListener('keyup', (e)=>{
             inputText = inputSearch.value
             console.log(inputText)
-        filterAll(dataDos.events)
-        })
-        
+        filterAll(fechasCard)
+        })    
+
+        function filterAll (array){
+            let cardsChecked= newSelectionArrays(inputChecked,array)
+            let checkFinalSelect= searchCards(inputText,cardsChecked)
+            console.log(checkFinalSelect)
+            renderCardUncoming(checkFinalSelect,cards_uncoming)
+        }
 
     }catch(error){
         console.log('Estoy en el catch:' + error.message)
@@ -55,15 +62,13 @@ async function newDataUncoming(){
 function renderCardUncoming (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
-        
+        if (array.length == 0){
+            let alert = document.createElement('div')
+            console.log(alert)
+            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            container.appendChild(alert)
+        }else{ 
         for (let elements of array){
-
-            if (array.length == 0){
-                let alert = document.createElement('div')
-                console.log(alert)
-                alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
-                container.appendChild(alert)
-            }else{
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -90,8 +95,6 @@ const navCheckbox = document.getElementById ('checkbox-uncoming');
 
 //! funcion de filtros por Categorias
 
-let inputChecked =[]
-let inputText= ''
 
 function checkbox (array){
     // let arrayCategories = array.map(function (array){return array.category});
@@ -127,13 +130,6 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
    )}
 
 
-
- function filterAll (array){
-    let cardsChecked= newSelectionArrays(inputChecked,array)
-    let checkFinalSelect= searchCards(inputText,cardsChecked)
-    console.log(checkFinalSelect)
-    renderCardUncoming(checkFinalSelect,cards_uncoming)
-}
 
 
 

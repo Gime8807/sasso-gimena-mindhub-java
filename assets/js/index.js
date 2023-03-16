@@ -34,6 +34,7 @@ async function newData(){
     console.log(inputText)
     filterAll(dataDos.events)
     })
+
   }catch(error){
       console.log('Estoy en el catch:' + error.message)
   } 
@@ -90,7 +91,7 @@ function checkbox (array){
         div.classList.add ("form-check")
         div.innerHTML = `<input class="form-check-input" type="checkbox" value="${element}" id="${element}">
         <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
-        console.log(element);
+        //console.log(element);
       fragment.appendChild(div)
 }
       navCheckbox.appendChild (fragment)
@@ -124,34 +125,13 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
 }
 
 
-// let Capacity = (data.events.map(evento=>evento.capacity))
-// let Asistance = (data.events.map(evento=>evento.assistance? evento.assistance:evento.estimate))
-// console.log(Capacity)
-// console.log(Asistance)
 
 
-// function mayorCapacity(array){
-// let mayor =array[0];
-//   for (let i=0; i<array.legth; i++){
-//     if(mayor<array[i]){
-//       mayor= array[i];
-//     }
-//   }
-// }
-//console.log(mayorCapacity(data.events))
 
 
-// function porcentajeAtendance(array,categoria){
-//   let eventPorCategory = array.filter(evento=> evento.category == categoria)
-//   console.log(eventPorCategory)
-//   for (element of array){
-//      let attendance=eventPorCategory.reduce((total,element)=>(element.assistance? total+=element.assistance/element.capacity:total+=element.estimate/element.capacity))
-//      console.log(attendance)
 
-//      let porcentaje= Math.floor(attendance*100)
-    
-//   }
-// }
-// console.log(porcentajeAtendance(data.events,'Museum'))
+
+
+
 
 

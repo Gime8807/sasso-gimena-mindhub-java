@@ -27,11 +27,14 @@ async function newDataPast(){
         checkbox(dataDos.events)
 
         //!Checks
+        let inputChecked =[]
+        let inputText= ''
+
         const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
         allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
         inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
         console.log(inputChecked)
-        filterAll (dataDos.events);  
+        filterAll (dateCardPast);  
         })})
 
         //!Search
@@ -39,9 +42,16 @@ async function newDataPast(){
         inputSearch.addEventListener('keyup', (e)=>{
         inputText = inputSearch.value
         console.log(inputText)
-        filterAll(dataDos.events)
+        filterAll(dateCardPast)
         })
 
+        //! Funcion para filtros cruzados
+        function filterAll (array){
+            let cardsChecked= newSelectionArrays(inputChecked,array)
+            let checkFinalSelect= searchCards(inputText,cardsChecked)
+            console.log(checkFinalSelect)
+            renderCardPast(checkFinalSelect,cards_past)
+        }
 
     }catch(error){
         console.log('Estoy en el catch:' + error.message)
@@ -53,14 +63,14 @@ async function newDataPast(){
 function renderCardPast (array, container){
     container.innerHTML=''
     let fragment= document.createDocumentFragment();
-        
+        if (array.length == 0){
+            let alert = document.createElement('div')
+            console.log(alert)
+            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            container.appendChild(alert)
+        }else{
         for (let elements of array){
-            if (array.length == 0){
-                let alert = document.createElement('div')
-                console.log(alert)
-                alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
-                container.appendChild(alert)
-            }else{
+         
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")
@@ -107,9 +117,6 @@ navCheckbox.appendChild (fragment)
 }
 
 
-let inputChecked =[]
-let inputText= ''
-
 //! funcion de filtros por Categorias
 function newSelectionArrays(arrayCategorys, arrayObjets){
     if (arrayCategorys.length === 0) 
@@ -124,13 +131,5 @@ function searchCards(value, arrayObjets) {
     return arrayObjets.filter(evento => evento.name.toLowerCase().includes(value.toLowerCase().trim())     
    )}
 
-
-//! Funcion para filtros cruzados
- function filterAll (array){
-    let cardsChecked= newSelectionArrays(inputChecked,array)
-    let checkFinalSelect= searchCards(inputText,cardsChecked)
-    console.log(checkFinalSelect)
-    renderCardPast(checkFinalSelect,cards_past)
-}
 
 
