@@ -66,11 +66,10 @@ function renderCardPast (array, container){
         if (array.length == 0){
             let alert = document.createElement('div')
             console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            alert.innerHTML = `<h3>There are no results for this search, try again.</h3>`
             container.appendChild(alert)
         }else{
         for (let elements of array){
-         
                 let div = document.createElement('div')
                     div.classList.add ("card","m-3")
                     div.classList.add ("border-3","border-dark","rounded")

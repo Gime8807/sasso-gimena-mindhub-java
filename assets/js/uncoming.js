@@ -18,11 +18,10 @@ async function newDataUncoming(){
          const newDate = Date.parse(dataDos.currentDate);
              console.log(newDate)
     
-        let fechasCard= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate);
+        let dateCardUncoming= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate);
              
-            console.log(fechasCard)
         
-        renderCardUncoming(fechasCard,cards_uncoming)
+        renderCardUncoming(dateCardUncoming,cards_uncoming)
         checkbox(dataDos.events)
 
         //!Checks
@@ -33,7 +32,7 @@ async function newDataUncoming(){
         allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
         inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
         console.log(inputChecked)
-        filterAll (fechasCard);  
+        filterAll (dateCardUncoming);  
         })})
 
         //!Search
@@ -41,7 +40,7 @@ async function newDataUncoming(){
         inputSearch.addEventListener('keyup', (e)=>{
             inputText = inputSearch.value
             console.log(inputText)
-        filterAll(fechasCard)
+        filterAll(dateCardUncoming)
         })    
 
         function filterAll (array){
@@ -65,7 +64,7 @@ function renderCardUncoming (array, container){
         if (array.length == 0){
             let alert = document.createElement('div')
             console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            alert.innerHTML = `<h3>There are no results for this search, try again.</h3>`
             container.appendChild(alert)
         }else{ 
         for (let elements of array){

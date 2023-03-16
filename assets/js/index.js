@@ -50,7 +50,7 @@ function renderCard (array,container){
       if (array.length == 0){
             let alert = document.createElement('div')
             console.log(alert)
-            alert.innerHTML = `<h3>No hay resultados para esta busqueda, intentalo nuevamente.</h3>`
+            alert.innerHTML = `<h3>There are no results for this search, try again.</h3>`
             container.appendChild(alert)
       }else{
         for (let elements of array){
