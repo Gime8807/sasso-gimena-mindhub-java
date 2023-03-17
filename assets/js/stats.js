@@ -26,7 +26,7 @@ async function tableStats(){
 tableStats()
 
 
-//!Evento de Mayor Capacidad
+//!Primer Table
 
 function showTableOne(array, container){
     let mayorCapacity = array.reduce((eventoA, eventoB)=> {if(eventoA.capacity<eventoB.capacity)return eventoB 
@@ -43,9 +43,9 @@ function showTableOne(array, container){
      })
 
      let containerTr = document.createElement('tr')
-     containerTr.innerHTML = ` <td>${highestAssistance.name}: ${highestAssistance.assistance/highestAssistance.capacity*100}%</td>
-                               <td>${lowestAssistance.name}: ${lowestAssistance.assistance/lowestAssistance.capacity*100}%</td>
-                               <td>${mayorCapacity.name}: ${mayorCapacity.capacity}</td>`
+     containerTr.innerHTML = ` <td><b>${highestAssistance.name}:</b> ${highestAssistance.assistance/highestAssistance.capacity*100}%</td>
+                               <td><b>${lowestAssistance.name}:</b> ${lowestAssistance.assistance/lowestAssistance.capacity*100}%</td>
+                               <td><b>${mayorCapacity.name}:</b> ${mayorCapacity.capacity}</td>`
      container.appendChild(containerTr)
 }
 
@@ -74,7 +74,7 @@ function showTableTwo (array,container){
        let all = {name:category, attendance:attendanceCategory, revenue: revenueEvents } 
 
        let containerTr = document.createElement('tr')
-       containerTr.innerHTML = ` <td>${all.name}</td>
+       containerTr.innerHTML = ` <td><b>${all.name}</b></td>
                                  <td>$${all.revenue}</td>
                                  <td>${all.attendance}%</td>`
        container.appendChild(containerTr)
@@ -104,7 +104,7 @@ function showTableThree (array,container){
        let all = { name:category, attendance:attendanceCategory, revenue: revenueEvents} 
        
        let containerTr = document.createElement('tr')
-       containerTr.innerHTML = ` <td>${all.name}</td>
+       containerTr.innerHTML = ` <td><b>${all.name}</b></td>
                                  <td>$${all.revenue}</td>
                                  <td>${all.attendance}%</td>`
        container.appendChild(containerTr)
