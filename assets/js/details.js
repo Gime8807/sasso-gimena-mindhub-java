@@ -12,9 +12,7 @@ async function details(){
     let dataDos = await response.json()
 
     const cardDetails = dataDos.events.find (evento => evento._id == id)
-    console.log(cardDetails)
-
-
+  
     function ShowDetailsCards (){
       const containerCardDetails = document.getElementById('cardDetails')
       let boxCard = document.createElement ('div');

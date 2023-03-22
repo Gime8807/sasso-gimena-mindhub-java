@@ -1,5 +1,3 @@
-// console.log(data);
-// console.log([document])
 
 const cardContainer = document.getElementById ('cardsEvents');
 const navCheckbox = document.getElementById ('checkbox');
@@ -12,9 +10,6 @@ async function newData(){
     let response = await fetch(urlApi)
     let dataDos = await response.json()
 
-    // let Capacity = (dataDos.events.map(evento=>evento.capacity))
-    // console.log(Capacity)
-
     renderCard(dataDos.events,cardContainer);
     checkbox(dataDos.events)
 
@@ -23,7 +18,6 @@ async function newData(){
       const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
       allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
       inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-      console.log(inputChecked)
         filterAll (dataDos.events);  
       })})
 
@@ -31,7 +25,6 @@ async function newData(){
     const inputSearch = document.getElementById ('search')
     inputSearch.addEventListener('keyup', (e)=>{
     inputText = inputSearch.value
-    console.log(inputText)
     filterAll(dataDos.events)
     })
 
@@ -66,17 +59,15 @@ function renderCard (array,container){
           <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
           <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
           </div>`
-          //console.log(elements);
           fragment.appendChild(div)    
          }
     container.appendChild(fragment)
 }
 }
 
-
 //! funcion de checkbox por categorias - este trae las categorias de las cards
 
-let newCategorys = [...new Set(data.events.map(function (events){return events.category}))]
+let newCategorys = [...new Set(dataDos.events.map(function (events){return events.category}))]
      console.log(newCategorys)
 
 function checkbox (array){
@@ -91,7 +82,6 @@ function checkbox (array){
         div.classList.add ("form-check")
         div.innerHTML = `<input class="form-check-input" type="checkbox" value="${element}" id="${element}">
         <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
-        //console.log(element);
       fragment.appendChild(div)
 }
       navCheckbox.appendChild (fragment)
@@ -120,16 +110,8 @@ function newSelectionArrays(arrayCategorys, arrayObjets){
  function filterAll (array){
     let cardsChecked= newSelectionArrays(inputChecked,array)
     let checkFinalSelect= searchCards(inputText,cardsChecked)
-    console.log(checkFinalSelect)
     renderCard(checkFinalSelect,cardContainer)
 }
-
-
-
-
-
-
-
 
 
 

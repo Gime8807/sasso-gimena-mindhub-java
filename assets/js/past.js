@@ -12,17 +12,12 @@ async function newDataPast(){
     try{
         let response = await fetch(urlApi)
         let dataDos = await response.json()
-            console.log(dataDos.events)
-
-        const newDate = Date.parse(dataDos.currentDate);
-            console.log(newDate)
+        
+        const newDate = Date.parse(dataDos.currentDate); 
         const uncomingDate = Date.parse(dataDos.events[0].date);
-            console.log(uncomingDate)
-
+    
         let dateCardPast= dataDos.events.filter(evento=>Date.parse(evento.date)<newDate);
             
-            console.log(dateCardPast) 
-
         renderCardPast(dateCardPast,cards_past)
         checkbox(dataDos.events)
 
@@ -33,7 +28,6 @@ async function newDataPast(){
         const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
         allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
         inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-        console.log(inputChecked)
         filterAll (dateCardPast);  
         })})
 
@@ -41,7 +35,6 @@ async function newDataPast(){
         const inputSearch = document.getElementById ('search-past')
         inputSearch.addEventListener('keyup', (e)=>{
         inputText = inputSearch.value
-        console.log(inputText)
         filterAll(dateCardPast)
         })
 
@@ -49,10 +42,8 @@ async function newDataPast(){
         function filterAll (array){
             let cardsChecked= newSelectionArrays(inputChecked,array)
             let checkFinalSelect= searchCards(inputText,cardsChecked)
-            console.log(checkFinalSelect)
             renderCardPast(checkFinalSelect,cards_past)
         }
-
     }catch(error){
         console.log('Estoy en el catch:' + error.message)
     } 
@@ -109,7 +100,6 @@ function checkbox (array){
     div.classList.add ("form-check")
     div.innerHTML = `<input class="form-check-input" type="checkbox" value="${element}" id="${element}">
     <label class="form-check-label text-light" for="flexCheckIndeterminate">${element}</label>`
-     console.log(element);
    fragment.appendChild(div)
 }
 navCheckbox.appendChild (fragment)

@@ -90,8 +90,9 @@ footer{
 
 /*! Estilos de Formulario de Contacto*/
 
-form{
+.form-contact{
     padding: 5px;
+    min-height: 80vh;    
 }
 
 /*! Estilos de Tabla -Stats*/

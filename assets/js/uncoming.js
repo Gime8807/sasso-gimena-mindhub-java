@@ -1,11 +1,7 @@
 
-//console.log(data);
-
 //*Captura de contenedor de las cards
 
 let cards_uncoming= document.getElementById('cardsUncoming');
-//console.log(cards_uncoming)
-
 
 let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
 
@@ -13,14 +9,11 @@ async function newDataUncoming(){
     try{
         let response = await fetch(urlApi)
         let dataDos = await response.json()
-            console.log(dataDos.events)
-
-         const newDate = Date.parse(dataDos.currentDate);
-             console.log(newDate)
-    
+            
+        const newDate = Date.parse(dataDos.currentDate);
+             
         let dateCardUncoming= dataDos.events.filter(evento=>Date.parse(evento.date)>newDate);
              
-        
         renderCardUncoming(dateCardUncoming,cards_uncoming)
         checkbox(dataDos.events)
 
@@ -31,25 +24,21 @@ async function newDataUncoming(){
         const allCheckbox = document.querySelectorAll ('input[type=checkbox]');
         allCheckbox.forEach(checkbox=>{checkbox.addEventListener('change', ()=>{
         inputChecked = Array.from(allCheckbox).filter(checkbox => checkbox.checked).map(input => input.value)
-        console.log(inputChecked)
         filterAll (dateCardUncoming);  
         })})
 
         //!Search
         const inputSearch = document.getElementById ('search-uncoming')
         inputSearch.addEventListener('keyup', (e)=>{
-            inputText = inputSearch.value
-            console.log(inputText)
+            inputText = inputSearch.value  
         filterAll(dateCardUncoming)
         })    
 
         function filterAll (array){
             let cardsChecked= newSelectionArrays(inputChecked,array)
             let checkFinalSelect= searchCards(inputText,cardsChecked)
-            console.log(checkFinalSelect)
             renderCardUncoming(checkFinalSelect,cards_uncoming)
         }
-
     }catch(error){
         console.log('Estoy en el catch:' + error.message)
     } 
@@ -80,7 +69,6 @@ function renderCardUncoming (array, container){
                         <p class="d-flex text-center align-items-center">Price:${elements.price}</p>
                         <a href="./card.html?id=${elements._id}" class="btn btn-warning">Details</a>
                         </div>`
-                //console.log(elements);
                 fragment.appendChild(div)
         }    
     }
@@ -114,7 +102,6 @@ function checkbox (array){
 }
     navCheckbox.appendChild (fragment)
 }
-
 
 function newSelectionArrays(arrayCategorys, arrayObjets){
     if (arrayCategorys.length === 0) 

@@ -16,8 +16,8 @@ async function tableStats(){
     const containerTableThree = document.getElementById('table3')
 
     showTableOne(dataDos.events,containerTableOne)
-    showTableTwo(dateCardUncoming,containerTableTwo)
-    showTableThree(dateCardPast,containerTableThree)
+    showTables(dateCardUncoming,containerTableTwo)
+    showTables(dateCardPast,containerTableThree)
     
 }catch(error){
     console.log('Estoy en el catch:' + error.message)
@@ -31,7 +31,6 @@ tableStats()
 function showTableOne(array, container){
     let mayorCapacity = array.reduce((eventoA, eventoB)=> {if(eventoA.capacity<eventoB.capacity)return eventoB 
         return eventoA})
-
     let highestAssistance = array.filter(event=>event.assistance).reduce((eventoA , eventoB) =>{
         if((eventoA.assistance/eventoA.capacity)>(eventoB.assistance/eventoB.capacity)) return eventoA
         return eventoB
@@ -51,63 +50,23 @@ function showTableOne(array, container){
 
 
 
-function showTableTwo (array,container){
+function showTables (array,container){
 
     let allCategorys = [...new Set(array.map(evento=> evento.category))]
     console.log(allCategorys)
    
     for (category of allCategorys){
         
-
         let eventPorCategory =array.filter(evento=> evento.category == category)
-         //console.log(eventPorCategory)
-   
-       let attendanceEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance/element.capacity:total+=element.estimate/element.capacity,0)
-    
-         let attendanceCategory = (attendanceEvents*100/eventPorCategory.length).toFixed(2)   
-            //console.log(attendanceCategory)
-
-       let revenueEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance*element.price:total+=element.estimate*element.price,0)
-
-       //console.log(revenueEvents)
-       
-       let all = {name:category, attendance:attendanceCategory, revenue: revenueEvents } 
-
-       let containerTr = document.createElement('tr')
-       containerTr.innerHTML = ` <td><b>${all.name}</b></td>
+        let attendanceEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance/element.capacity:total+=element.estimate/element.capacity,0)
+        let attendanceCategory = (attendanceEvents*100/eventPorCategory.length).toFixed(2)   
+        let revenueEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance*element.price:total+=element.estimate*element.price,0)
+        let all = {name:category, attendance:attendanceCategory, revenue: revenueEvents } 
+        let containerTr = document.createElement('tr')
+            containerTr.innerHTML = ` <td><b>${all.name}</b></td>
                                  <td>$${all.revenue}</td>
                                  <td>${all.attendance}%</td>`
-       container.appendChild(containerTr)
-       
+        container.appendChild(containerTr)   
     }   
 }
 
-function showTableThree (array,container){
-
-    let allCategorys = [...new Set(data.events.map(evento=> evento.category))]
-    console.log(allCategorys)
-   
-    for (category of allCategorys){
-       
-        let eventPorCategory =array.filter(evento=> evento.category == category)
-         //console.log(eventPorCategory)
-   
-       let attendanceEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance/element.capacity:total+=element.estimate/element.capacity,0)
-    
-         let attendanceCategory = (attendanceEvents*100/eventPorCategory.length).toFixed(2)   
-            //console.log(attendanceCategory)
-
-       let revenueEvents=eventPorCategory.reduce((total,element)=>element.assistance!=undefined? total+=element.assistance*element.price:total+=element.estimate*element.price,0)
-
-       //console.log(revenueEvents)
-       
-       let all = { name:category, attendance:attendanceCategory, revenue: revenueEvents} 
-       
-       let containerTr = document.createElement('tr')
-       containerTr.innerHTML = ` <td><b>${all.name}</b></td>
-                                 <td>$${all.revenue}</td>
-                                 <td>${all.attendance}%</td>`
-       container.appendChild(containerTr)
-       
-    }   
-}
